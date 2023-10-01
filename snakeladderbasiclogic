@@ -1,0 +1,59 @@
+import random
+
+# Define the Snake and Ladder positions
+snakes_and_ladders = {
+    16: 6,
+    47: 26,
+    49: 11,
+    56: 53,
+    62: 19,
+    64: 60,
+    87: 24,
+    93: 73,
+    95: 75,
+    98: 78,
+}
+
+# Function to roll a die
+def roll_die():
+    return random.randint(1, 6)
+
+# Function to play a single turn
+def play_turn(player, position):
+    input(f"{player}'s turn. Press Enter to roll the die...")
+    die_roll = roll_die()
+    print(f"{player} rolled a {die_roll}.")
+    position += die_roll
+    if position in snakes_and_ladders:
+        new_position = snakes_and_ladders[position]
+        if new_position > position:
+            print(f"Yay! {player} climbed a ladder to position {new_position}!")
+        else:
+            print(f"Oops! {player} got bitten by a snake and fell to position {new_position}.")
+        position = new_position
+    print(f"{player} is now at position {position}.")
+    return position
+
+# Main game loop
+def snake_ladder_game():
+    player1 = input("Enter the name of Player 1: ")
+    player2 = input("Enter the name of Player 2: ")
+
+    player1_position = 0
+    player2_position = 0
+
+    while player1_position < 100 and player2_position < 100:
+        player1_position = play_turn(player1, player1_position)
+        if player1_position >= 100:
+            print(f"{player1} wins!")
+            break
+
+        player2_position = play_turn(player2, player2_position)
+        if player2_position >= 100:
+            print(f"{player2} wins!")
+            break
+
+# Start the game
+if __name__ == "__main__":
+    print("Welcome to Snake and Ladder Game!")
+    snake_ladder_game()
